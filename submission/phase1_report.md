@@ -44,23 +44,19 @@ Copy these from `submission/phase1_report.json`. Cold is `cold_ms`; warm median 
 
 | Platform | Cold (ms) | Warm median (ms) |
 |---|---|---|
-| IaaS VM | <!--answer:vm_cold_ms-->256.0<!--/answer--> | <!--answer:vm_warm_median_ms-->212.0<!--/answer--> |
-| Cloud Run | <!--answer:cloudrun_cold_ms-->3845.5<!--/answer--> | <!--answer:cloudrun_warm_median_ms-->661.9<!--/answer--> |
-| Cloud Function | <!--answer:function_cold_ms-->2289.7<!--/answer--> | <!--answer:function_warm_median_ms-->644.8<!--/answer--> |
+| IaaS VM | <!--answer:vm_cold_ms-->248.7<!--/answer--> | <!--answer:vm_warm_median_ms-->212.1<!--/answer--> |
+| Cloud Run | <!--answer:cloudrun_cold_ms-->2017.6<!--/answer--> | <!--answer:cloudrun_warm_median_ms-->649.2<!--/answer--> |
+| Cloud Function | <!--answer:function_cold_ms-->1377.7<!--/answer--> | <!--answer:function_warm_median_ms-->638.8<!--/answer--> |
 
 Include your histogram or plot of the warm distribution below (an image, or the ASCII chart
 `measure.py` prints). This is read by a human, not the grader:
 
 <!--answer:latency_plot-->
 ```
-Phase 1 — deployment measurements (measure.py, 20 warm requests each)
-[OK  ] vm        cold=  256.0ms  warm_median=  212.0ms
-            #############
-[OK  ] cloudrun  cold= 3845.5ms  warm_median=  661.9ms
-            ########################################
-[OK  ] function  cold= 2289.7ms  warm_median=  644.8ms
-            #######################################
-````
+vm        cold=  248.7 ms   warm min/median/p95/max = 210.3/212.1/213.2/215.2 ms
+cloudrun  cold= 2017.6 ms   warm min/median/p95/max = 120.0/649.2/682.6/684.5 ms
+function  cold= 1377.7 ms   warm min/median/p95/max = 126.0/638.8/681.9/683.0 ms
+```
 <!--/answer-->
 
 ---
@@ -103,14 +99,14 @@ SERVICE: echo
 REGION: us-central1
 URL: https://echo-279859701913.us-central1.run.app
 LAST DEPLOYED BY: service-279859701913@gcf-admin-robot.iam.gserviceaccount.com
-LAST DEPLOYED AT: 2026-10-18T11:26:01.014428Z
+LAST DEPLOYED AT: 2026-10-27T13:38:56.088004Z
 
 ✔
 SERVICE: echo-bot
 REGION: us-central1
 URL: https://echo-bot-279859701913.us-central1.run.app
 LAST DEPLOYED BY: Thomas.ballaven@eurecom.fr
-LAST DEPLOYED AT: 2026-10-18T11:22:39.888902Z
+LAST DEPLOYED AT: 2026-10-27T13:37:47.376056Z
 ```
 <!--/answer-->
 
@@ -119,5 +115,5 @@ cold start resembles Cloud Run's so closely, and what — if anything — genuin
 the two deployment paths. (~120 words)
 
 <!--answer:convergence_explanation-->
-The list shows two Cloud Run services although I deployed only one: "echo", deployed by gcf-admin-robot, is my Cloud Function. A gen-2 Function is a Cloud Run service under the hood: Cloud Build turns my source into a container image (stored in the gcf-artifacts repository) and it runs on the same Cloud Run infrastructure with the same scale-to-zero model. That is why both cold starts are in the seconds (3.8 s and 2.3 s) while the always-on VM shows ~0.26 s: both must start a container instance from zero, then Python and the web server. What genuinely differs is the deployment path and defaults: the Function is built from source by a Google buildpack with Functions Framework instead of my Dockerfile, gets smaller resources (0.17 vCPU, 256 MB) and serves one request per instance instead of 80.
+The list shows two Cloud Run services although I deployed only one: "echo", deployed by gcf-admin-robot, is my Cloud Function. A gen-2 Function is a Cloud Run service under the hood: Cloud Build turns my source into a container image (stored in the gcf-artifacts repository) and it runs on the same Cloud Run infrastructure with the same scale-to-zero model. That is why both cold starts are in the seconds (2.0 s and 1.4 s) while the always-on VM shows ~0.25 s: both must start a container instance from zero, then Python and the web server. What genuinely differs is the deployment path and defaults: the Function is built from source by a Google buildpack with Functions Framework instead of my Dockerfile, gets smaller resources (0.17 vCPU, 256 MB) and serves one request per instance instead of 80.
 <!--/answer-->
