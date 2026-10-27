@@ -21,28 +21,19 @@ app = Flask(__name__)
 # Functions YOU implement (pure — no Flask needed; unit-tested offline)
 # --------------------------------------------------------------------------- #
 def build_echo(message: str) -> dict:
-    """Return the echo payload for ``message``.
-
-    Must return exactly ``{"echo": <message>, "length": <len of message>}``.
-    """
-    # TODO: return {"echo": message, "length": len(message)}
-    raise NotImplementedError("Phase 1: implement build_echo()")
+    """Return the echo payload for ``message``."""
+    return {"echo": message, "length": len(message)}
+   
 
 
 def extract_message(args, json_body) -> str | None:
-    """Pull the user's message out of a request.
-
-    Accept either a query parameter ``msg`` (GET) or a JSON body ``{"message": ...}``
-    (POST). Return the string, or ``None`` if neither is present.
-
-    Args:
-        args: request.args (a mapping with ``.get``), e.g. ``{"msg": "hi"}``.
-        json_body: parsed JSON body or ``None``, e.g. ``{"message": "hi"}``.
-    """
-    # TODO: return args["msg"] if present, else json_body["message"] if present,
-    #       else None. Use .get() so missing keys don't raise.
-    raise NotImplementedError("Phase 1: implement extract_message()")
-
+    """Pull the user's message out of a request (?msg=... or JSON {"message": ...})."""
+    msg = args.get("msg") if args else None
+    if msg is not None:
+        return msg
+    if isinstance(json_body, dict):
+        return json_body.get("message")
+    return None
 
 # --------------------------------------------------------------------------- #
 # Routes (provided — they call the functions above)
