@@ -1,0 +1,30 @@
+{
+  "phase": "2",
+  "environment": {
+    "colab": true
+  },
+  "attention": {
+    "naive_ms": 246.847,
+    "vectorized_ms": 0.983,
+    "speedup": 251.12
+  },
+  "threads": {
+    "1": 2665.196,
+    "2": 2039.544,
+    "4": 2204.024,
+    "8": 2238.965
+  },
+  "devices": {
+    "cpu_ms": 435613.4,
+    "gpu_ms": 14798.7
+  },
+  "training": {
+    "steps": 2000,
+    "final_loss": 1.4803,
+    "param_count": 4935680
+  },
+  "sample": "\nFrathour now, this hone whats any noture are.\nWhat of mourn!\n\nSICINIUS:\nNo, readly,\nIt am higher is the wondergerley: i'\nYour leave: buring; Kink I musty comfort\nTwhere belows are at days.\n\nPETRUCHIO:",
+  "model": {
+    "gcs_url": "https://storage.googleapis.com/eurecomgpt-511417-eurecomgpt/model.safetensors"
+  }
+}
